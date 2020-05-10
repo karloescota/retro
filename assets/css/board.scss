@@ -1,0 +1,44 @@
+.board-container {
+  padding: 2rem;
+}
+
+.board-column {
+  background-color: white;
+
+  .post {
+    padding: 1rem;
+    margin-bottom: 0.2rem;
+    border-radius: 0.4rem;
+    display: flex;
+    color: #ececec;
+
+    > .content {
+      flex-grow: 1;
+    }
+
+    > .cta > * {
+      display: block;
+    }
+  }
+
+  .post-blurred .not-owned {
+    color: transparent;
+    text-shadow: 0 0 6px rgba(0,0,0,0.9);
+  }
+
+  .positive-posts > .post {
+    background-color: #2ebf76;
+  }
+
+  .negative-posts > .post {
+    background-color: #de2222;
+  }
+
+  .action-posts > .post {
+    background-color: #840284;
+  }
+
+  .cta > a {
+    color: #ececec;
+  }
+}

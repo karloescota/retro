@@ -1,0 +1,8 @@
+<section class="phx-hero">
+  <%= form_for :board, "#",
+    id: "board-form",
+    phx_submit: "create_board" %>
+
+    <%= submit "New Board", phx_disable_with: "Creating..." %>
+  </form>
+</section>

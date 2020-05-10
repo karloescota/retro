@@ -1,0 +1,51 @@
+<div class="board-container container-fluid">
+  <h3>Board: <%= @code %></h3>
+  <%= tag(:input, type: "checkbox", phx_click: "toggle_reveal_posts", value: "true", checked: @reveal_posts) %>
+  Reveal posts
+
+  <div class="row">
+    <div class="board-column column">
+      <div class="title">Went well</div>
+      <%= live_patch "New", to: Routes.board_show_path(@socket, :new_post,  @code, %{type: "positive"}), replace: true %>
+
+      <div id="positive" class="positive-posts <%= if not @reveal_posts, do: "post-blurred" %>">
+        <%= for post <- @positive do %>
+          <%= live_component @socket, RetroWeb.PostLive.PostComponent, id: post.id, code: @code, post: post, user_id: @user_id %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="board-column column">
+      <div class="title">To improve</div>
+      <%= live_patch "New", to: Routes.board_show_path(@socket, :new_post,  @code, %{type: "negative"}), replace: true %>
+
+      <div id="negative" class="negative-posts <%= if not @reveal_posts, do: "post-blurred" %>">
+        <%= for post <- @negative do %>
+          <%= live_component @socket, RetroWeb.PostLive.PostComponent, id: post.id, code: @code, post: post, user_id: @user_id %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="board-column column">
+      <div class="title">Action</div>
+      <%= live_patch "New", to: Routes.board_show_path(@socket, :new_post,  @code, %{type: "action"}), replace: true %>
+
+      <div id="action" class="action-posts <%= if not @reveal_posts, do: "post-blurred" %>">
+        <%= for post <- @action do %>
+          <%= live_component @socket, RetroWeb.PostLive.PostComponent, id: post.id, code: @code, post: post, user_id: @user_id %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <%= if @live_action in [:new_post, :edit_post] do %>
+    <%= live_modal @socket, RetroWeb.PostLive.FormComponent,
+      id: :new,
+      title: @page_title,
+      action: @live_action,
+      post: @post,
+      code: @code,
+      user_id: @user_id,
+      return_to: Routes.board_show_path(@socket, :show, @code) %>
+  <% end %>
+</div>
